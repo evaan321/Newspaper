@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h1 class="mb-4">Latest Articles</h1>
+
+    <div class="row">
+      {% for article in articles %}
+        <div class="col-md-6 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="card-title">{{ article.headline }}</h2>
+              <p class="card-text">{{ article.body|truncatechars:50 }}</p>
+              <p class="card-text"><small class="text-muted">Category: {{ article.category.name }}</small></p>
+              <p class="card-text"><small class="text-muted">Published Time: {{ article.publishing_time }}</small></p>
+              <a href="{% url 'article_detail' article.id %}" class="btn btn-warning">Read More</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h1 class="mb-4">{{ user_model.username }}'s Profile</h1>
+
+    <h1>First Name : {{user_model.first_name}}</h1>
+    <h1>Last Name  :  {{user_model.last_name}}</h1>
+    {% if request.user.is_staff %}
+        <h1>Authorization : Editor</h1>
+    {% else %}
+        <h1>Authorization : Viewer</h1>
+    {% endif %}
+{% endblock %}

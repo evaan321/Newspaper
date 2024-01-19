@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="card-title">{{ article.headline }}</h1>
+        <p class="card-text">{{ article.body }}</p>
+        <p class="card-text"><small class="text-muted">Category: {{ article.category.name }}</small></p>
+      </div>
+    </div>
+
+    <div class="card mt-4">
+      <div class="card-body">
+        <form method="post" action="{% url 'article_detail' article_id=article.id %}">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="id_value">Rate this article:</label>
+            {{ rating_form }}
+          </div>
+          <button type="submit" class="btn btn-warning">Submit Rating</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
