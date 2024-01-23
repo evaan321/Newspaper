@@ -54,9 +54,29 @@ def home(request):
 @login_required
 def profile(request):
     user_model = request.user
-    
 
-    return render(request, 'profile.html', {'user_model': user_model})
+    
+    is_staff = request.user.is_staff
+
+    
+    if is_staff:
+        
+        
+        if request.method == 'POST':
+            form = ArticleForm(request.POST, request.FILES)
+            if form.is_valid():
+                new_article = form.save(commit=False)
+                new_article.author = user_model
+                new_article.save()
+                return redirect('profile')
+        else:
+            form = ArticleForm()
+
+    else:
+        user_articles = None
+        form = None
+
+    return render(request, 'profile.html', {'user_model': user_model, 'is_staff': is_staff, 'form': form})
 
 @login_required
 def logoutNew(request):

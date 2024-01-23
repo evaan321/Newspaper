@@ -1,29 +1,89 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <h2 class="mb-4">Login</h2>
-        <form method="post" action="{% url 'login' %}">
-          {% csrf_token %}
-          <div class="mb-3">
-            {{ form.username.label_tag }}
-            {{ form.username }}
-            {% if form.username.errors %}
-              <div class="invalid-feedback">{{ form.username.errors.0 }}</div>
-            {% endif %}
-          </div>
-          <div class="mb-3">
-            {{ form.password.label_tag }}
-            {{ form.password }}
-            {% if form.password.errors %}
-              <div class="invalid-feedback">{{ form.password.errors.0 }}</div>
-            {% endif %}
-          </div>
-          <button type="submit" class="btn btn-primary">Login</button>
-        </form>
+<style>
+  .mybody {
+    font-family: 'Arial', sans-serif;
+    background-color: #4747bf;
+    background-image: linear-gradient(43deg, #4747bf 0%, #601d56 46%, #6f6149 100%);
+    color: #fff;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  .login-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+  }
+
+  h2 {
+    text-align: center;
+    color: black;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  input {
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: border-color 0.3s ease-in-out;
+    outline: none;
+    color: black;
+  }
+
+  input:focus {
+    border-color: #ff8c00; /* Orange color when focused */
+  }
+
+  button {
+    background-color: #ff8c00; /* Bright orange color */
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  button:hover {
+    background-color: #ff7f00; /* Slightly darker orange color on hover */
+  }
+</style>
+<div class="mybody">
+  <div class="login-container">
+    <h2>Login</h2>
+    <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      <div class="text-dark">
+        {{ form.username.label_tag }}
+        {{ form.username }}
+        {% if form.username.errors %}
+          <div class="invalid-feedback">{{ form.username.errors.0 }}</div>
+        {% endif %}
       </div>
-    </div>
+      <div class="text-dark">
+        {{ form.password.label_tag }}
+        {{ form.password }}
+        {% if form.password.errors %}
+          <div class="invalid-feedback">{{ form.password.errors.0 }}</div>
+        {% endif %}
+      </div>
+      <button type="submit" class="text-dark">Login</button>
+    </form>
   </div>
+</div>
+
+
 {% endblock %}

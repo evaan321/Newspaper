@@ -7,10 +7,6 @@
 background-image: linear-gradient(43deg, #4747bf 0%, #601d56 46%, #6f6149 100%) ;
 
   }
-  .card-img-top {
-    max-width: 100%;
-    height: 400px;
-  }
   .mybtn{
   
 
@@ -51,6 +47,9 @@ background-image: linear-gradient(43deg, #4747bf 0%, #601d56 46%, #6f6149 100%) 
 
 
 
+  }  .card-img-top {
+    max-width: 100%;
+    height: 400px;
   }
  
 </style>
@@ -87,9 +86,9 @@ background-image: linear-gradient(43deg, #4747bf 0%, #601d56 46%, #6f6149 100%) 
 
                             <div class="card-body text-white">
                                 <h2 class="card-title">{{ article.headline }}</h2>
-                                <p class="card-text ">{{ article.body|truncatechars:50 }}</p>
+                                <p class="card-text ">{{ article.body|truncatechars:150 }}</p>
                                 <p class="card-text text-white">Topic : <span class="button-38">{{ article.category.name }}</span> </p>
-                                <p>Average Rating: {{ article.average_rating}}</p>
+                                <p>Average Rating: {{ article.average_rating }}</p>
                                 <p class="card-text "><small class="text-white">Published Time: {{ article.publishing_time }}</small></p>
                                 <a href="{% url 'article_detail' article.id %}" class="btn btn-light">Read More</a>
                             </div>

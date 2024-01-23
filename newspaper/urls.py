@@ -20,7 +20,8 @@ from userAuth.views import *
 from article.views import *
 from category.views import *
 from home.views import *
-
+from django.conf.urls.static import static
+from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', CustomLoginView.as_view(), name='login'),
@@ -30,6 +31,8 @@ urlpatterns = [
     path('activate/<int:user_id>/<str:token>/', activate, name='activate'),
     path('', article_list, name='article_list'),
     path('<int:article_id>/', article_detail, name='article_detail'),
+    path('category/<str:category_name>/', article_list_by_category, name='article_list_by_category')
 
 
 ]
+urlpatterns += static(settings.MEDIA_URL ,document_root = settings.MEDIA_ROOT)

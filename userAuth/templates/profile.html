@@ -1,14 +1,84 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="container mt-5">
-    <h1 class="mb-4">{{ user_model.username }}'s Profile</h1>
+<!-- Inside your profile.html template -->
+<style>
+    body {
+        background-color: #4747bf ;
+background-image: linear-gradient(43deg, #4747bf 0%, #601d56 46%, #6f6149 100%) ;
+    }
 
-    <h1>First Name : {{user_model.first_name}}</h1>
-    <h1>Last Name  :  {{user_model.last_name}}</h1>
-    {% if request.user.is_staff %}
-        <h1>Authorization : Editor</h1>
-    {% else %}
-        <h1>Authorization : Viewer</h1>
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    h1 {
+        color: white;
+    }
+
+    h2 {
+        color: white;
+        margin-top: 20px;
+
+    }
+
+    form {
+        margin-bottom: 20px;
+        color: white;
+    }
+
+    button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    li {
+        margin-bottom: 10px;
+    }
+
+    a {
+        text-decoration: none;
+        color: white;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="container">
+    <h1>{{ user_model.username }}'s Profile</h1>
+
+    {% if is_staff %}
+        <!-- Display form for creating a new article -->
+        <h2>Create a New Article</h2>
+        <form method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Create Article</button>
+        </form>
     {% endif %}
+
+    {% if user_articles %}
+        <!-- Display the list of articles created by the user -->
+        <h2>Your Articles</h2>
+        <ul>
+            {% for article in user_articles %}
+                <li>{{ article.title }} - <a href="{% url 'edit_article' article.id %}">Edit</a> | <a href="{% url 'delete_article' article.id %}">Delete</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+
 {% endblock %}

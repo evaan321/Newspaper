@@ -1,26 +1,92 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="container mt-4">
+<style>
+  .full-body {
+    background-color: #4747bf;
+    background-image: linear-gradient(43deg, #4747bf 0%, #601d56 46%, #6f6149 100%);
+    padding: 20px;
+    color: #fff;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: inherit;
+    border: none;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-title,
+  .card-text,
+  .text-muted {
+    color: #fff;
+  }
+
+  .card-title {
+    font-size: 2em;
+    margin-bottom: 10px;
+  }
+
+  .card-text {
+    margin-bottom: 15px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .btn-warning {
+    background-color: #ffc107;
+    color: #333;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  .btn-warning:hover {
+    background-color: #ffca2b;
+  }
+
+  .card-img-top {
+    max-width: 100%;
+    height: auto;
+  }
+</style>
+
+<div class="full-body">
+  <div class="container">
     <div class="card">
+      {% if article.photo %}
+        <img src="{{ article.photo.url }}" class="card-img-top" alt="{{ article.headline }}">
+      {% endif %}
+
       <div class="card-body">
         <h1 class="card-title">{{ article.headline }}</h1>
         <p class="card-text">{{ article.body }}</p>
-        <p class="card-text"><small class="text-muted">Category: {{ article.category.name }}</small></p>
+        <p class="card-text">Average Rating: {{ average_rating }}</p>
+        <p class="card-text"><small class="">Category: {{ article.category.name }}</small></p>
       </div>
     </div>
 
-    <div class="card mt-4">
+    <div class="card mt-4 text-light">
       <div class="card-body">
         <form method="post" action="{% url 'article_detail' article_id=article.id %}">
           {% csrf_token %}
           <div class="form-group">
-            <label for="id_value">Rate this article:</label>
+            <h1 for="id_value" class="text-light">Rate this article:</h1>
             {{ rating_form }}
           </div>
-          <button type="submit" class="btn btn-warning">Submit Rating</button>
+          <button type="submit" class="btn btn-warning ">Submit Rating</button>
         </form>
       </div>
     </div>
   </div>
+</div>
+
 {% endblock %}
