@@ -15,7 +15,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import DeleteView,UpdateView
 
 
-@login_required
+
 def article_list(request, category_slug=None):
     articles = Article.objects.all()
     categories = Category.objects.all()
