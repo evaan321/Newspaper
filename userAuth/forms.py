@@ -35,3 +35,10 @@ class UserProfileForm(UserChangeForm):
         self.helper.form_show_labels = False
         self.helper.label_class = ''
         
+
+
+
+class ContactForm(forms.Form):
+    name = forms.CharField(label='Your Name', max_length=100)
+    email = forms.EmailField(label='Your Email')
+    message = forms.CharField(label='Your Message', widget=forms.Textarea)

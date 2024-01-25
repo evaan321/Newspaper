@@ -43,6 +43,8 @@ urlpatterns = [
         path('article/<int:pk>/edit/', EditArticleView.as_view(), name='edit_article'),
     path('article/<int:pk>/delete/', DeleteArticleView.as_view(), name='delete_article'),
    path('profile/update/', UserProfileUpdateView.as_view(), name='update_profile'),
+   path('contact-us/', contact_us, name='contact_us'),
+   path('about_us',about,name = 'about')
 
 
 

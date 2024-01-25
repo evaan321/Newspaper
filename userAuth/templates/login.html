@@ -60,6 +60,11 @@
   button:hover {
     background-color: #ff7f00; /* Slightly darker orange color on hover */
   }
+  .invalid-feedback {
+  color: #dc3545; /* Red color for error messages */
+  font-size: 12px;
+  margin-top: 4px;
+}
 </style>
 <div class="mybody">
   <div class="login-container">
@@ -76,8 +81,8 @@
       <div class="text-dark">
         {{ form.password.label_tag }}
         {{ form.password }}
-        {% if form.password.errors %}
-          <div class="invalid-feedback">{{ form.password.errors.0 }}</div>
+        {% if form.errors %}
+          <div> <p class="bg-info-subtle">Invalid login,please try again </p> </div>
         {% endif %}
       </div>
       <button type="submit" class="text-dark">Login</button>

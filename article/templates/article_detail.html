@@ -57,12 +57,15 @@
     max-width: 100%;
     height: auto;
   }
+
+  .rating i {
+    cursor: pointer;
+  }
 </style>
+
 {% load crispy_forms_tags %}
 
 <div class="full-body">
-    
-   
   <div class="container">
     <div class="card">
       {% if article.photo %}
@@ -73,15 +76,13 @@
         <h1 class="card-title">{{ article.headline }}</h1>
         <p class="card-text">{{ article.body }}</p>
         <p class="card-text">Average Rating: {{ average_rating }}</p>
-        
         <p class="card-text"><small class="">Category: {{ article.category.name }}</small></p>
         <a class="btn btn-success" href="{% url 'generate_pdf' article_id=article.id %}">Download PDF</a>
-       {% if request.user.is_staff %}
-       <br>
-        <a class="btn  btn-info text-light mt-3" href="{% url 'edit_article' article.id %}">Update</a>
-        <a class="btn btn-danger mt-3" href="{% url 'delete_article' article.id %}">Delete</a>
+        {% if request.user.is_staff %}
+        <br>
+          <a class="btn btn-info text-light mt-3" href="{% url 'edit_article' article.id %}">Update</a>
+          <a class="btn btn-danger mt-3" href="{% url 'delete_article' article.id %}">Delete</a>
         {% endif %}
-        </p>
       </div>
     </div>
 
@@ -91,13 +92,44 @@
           {% csrf_token %}
           <div class="form-group">
             <h1 for="id_value" class="text-light">Rate this article</h1>
-            {{ rating_form |crispy }}
+            <div id="star-rating" class="rating">
+              <i class="fas fa-star" data-rating="1"></i>
+              <i class="fas fa-star" data-rating="2"></i>
+              <i class="fas fa-star" data-rating="3"></i>
+              <i class="fas fa-star" data-rating="4"></i>
+              <i class="fas fa-star" data-rating="5"></i>
+              <input type="hidden" name="value" id="id_value" value="1">
+            </div>
           </div>
-          <button type="submit" class="btn btn-warning ">Submit Rating</button>
+          <button type="submit" class="btn btn-warning">Submit Rating</button>
         </form>
       </div>
     </div>
   </div>
 </div>
+
+<script src="https://kit.fontawesome.com/1629668d55.js" crossorigin="anonymous"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const stars = document.querySelectorAll('.rating i');
+
+    stars.forEach((star) => {
+      star.addEventListener('click', function () {
+        const ratingValue = this.dataset.rating;
+        document.getElementById('id_value').value = ratingValue;
+
+        stars.forEach((s, index) => {
+          if (index < ratingValue) {
+            s.classList.add('fas');
+            s.classList.remove('far');
+          } else {
+            s.classList.add('far');
+            s.classList.remove('fas');
+          }
+        });
+      });
+    });
+  });
+</script>
 
 {% endblock %}

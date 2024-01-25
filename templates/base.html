@@ -67,6 +67,20 @@ ul{
   color: #ffffff;
   padding-left: 8px;
 }
+.footer-col ul li p{
+  font-size: 16px;
+  text-transform: capitalize;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 300;
+  color: #bbbbbb;
+  display: block;
+  transition: all 0.3s ease;
+}
+.footer-col ul li p:hover{
+  color: #ffffff;
+  padding-left: 8px;
+}
 .footer-col .social-links a{
   display: inline-block;
   height: 40px;
@@ -106,7 +120,7 @@ ul{
   <body>
     <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Newspaper Portal</a>
+          <a class="navbar-brand " href="{% url 'article_list' %}">Newspaper Portal</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -115,18 +129,24 @@ ul{
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="{% url 'article_list' %}">Home</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'contact_us' %}">Contact Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'about' %}">About Us</a>
+              </li>
              
             </ul>
             
             <div>
               {% if request.user.is_authenticated %}
-              <a class="btn btn-light" href="{% url 'profile' %}">Profile</a>
+              <a class="btn btn-light" href="{% url 'profile' %}"><i class="fa-regular fa-id-badge"></i>         Profile</a>
              
-                <a class=" btn btn-light"  href="{% url 'logout' %}">Logout</a>
+                <a class=" btn btn-light"  href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
            
               {% else %}
-                <a class="btn btn-light" href="{% url 'register' %}">Register</a>
-                <a class="btn btn-light" href="{% url 'login' %}">Login</a>
+                <a class="btn btn-light" href="{% url 'register' %}"><i class="fa-regular fa-id-card"></i> Register</a>
+                <a class="btn btn-light" href="{% url 'login' %}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
               {% endif %}
             </div>
           </div>
@@ -147,28 +167,31 @@ background-image: linear-gradient(43deg, #4747bf 0%, #601d56 46%, #6f6149 100%) 
       <div class="container">
        <div class="row">
          <div class="footer-col">
-           <h4>company</h4>
+           <h4 class="">Newspaper Portal</h4>
            <ul>
-             <li><a href="#">about us</a></li>
-             <li><a href="#">our services</a></li>
-             <li><a href="#">privacy policy</a></li>
-             <li><a href="#">affiliate program</a></li>
+            <li> <p><i class="fa-solid fa-location-dot"></i>  Sector 14 Uttara Dhaka 1230 </p> </li>
+             <li> <p><i class="fa-solid fa-phone-flip"></i> +8801310594301 </p> </li>
+            <li>   <p> <i class="fa-solid fa-envelope"> </i> evaanrahman@gmail.com</p> </li>
+            
            </ul>
          </div>
          <div class="footer-col">
            <h4>get help</h4>
            <ul>
-             <li><a href="#">FAQ</a></li>
-             <li><a href="#">Legal policy</a></li>
-             <li><a href="#">Status policy</a></li>
-             <li><a href="#">Testimonials</a></li>
-             <li><a href="#">payment options</a></li>
+            <li><a href="{% url 'article_list' %}">Home</a></li>
+             <li><a href="{% url 'about' %}">about us</a></li>
+            
+             
+             <li><a href="{% url 'contact_us' %}">Contact Us</a></li>
+            
            </ul>
          </div>
          <div class="footer-col">
           <h4>All rights Reserved</h4>
           <ul>
-            <li><a href="#">Evaan | 2024 (c)</a></li>
+            <li><a href="#">Evaan | 2024 <i class="fa-regular fa-copyright"></i></a></li>
+            <li class="fs-2"><a href="https://github.com/evaan321"><i  class="fa-brands fa-github fa-3x"></i>  </a></li>
+            <li class="fs-2"><a href="https://www.linkedin.com/"><i class="fa-brands fa-linkedin fa-3x"></i>  </a></li>
             
           </ul>
         </div>
@@ -180,7 +203,7 @@ background-image: linear-gradient(43deg, #4747bf 0%, #601d56 46%, #6f6149 100%) 
  
 
 
-
+   <script src="https://kit.fontawesome.com/1629668d55.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   </body>
 </html>

@@ -21,6 +21,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.conf import settings
 
 
 
@@ -130,3 +131,29 @@ class UserProfileUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView)
     def form_invalid(self, form):
         messages.error(self.request, 'There was an error updating your profile.')
         return super().form_invalid(form)
+    
+def contact_us(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            # Process form data
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+
+            # Send email
+            subject = 'Contact Us Form Submission'
+            message = f'Name: {name}\nEmail: {email}\n\n\n{message}'
+            from_email = 'evaanrahman2@gmail.com'
+            to_email = [form.cleaned_data['email']]
+            send_mail(subject, message, from_email, to_email, fail_silently=False)
+
+            
+            return redirect('article_list')
+    else:
+        form = ContactForm()
+
+    return render(request, 'contact_us.html', {'form': form})
+
+def about(request):
+    return render(request , 'about_us.html')
