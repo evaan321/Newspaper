@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
+
 <style>
   .full-body{
     background-color: #4747bf ;
@@ -54,7 +55,9 @@ background-image: linear-gradient(43deg, #4747bf 0%, #601d56 46%, #6f6149 100%) 
   }
  
 </style>
+
 <div class="full-body">
+
   <div class="container ">
     <div class="row">
        
@@ -96,10 +99,26 @@ background-image: linear-gradient(43deg, #4747bf 0%, #601d56 46%, #6f6149 100%) 
                         </div>
                     </div>
                 {% endfor %}
+                {% if request.user.is_staff %}
+                <div class="col-md-6 mb-4">
+                  <div class="card full-body">
+                      
+                          <a href="{% url 'addArticle'  %}"> <img src="{% static 'yo.gif' %}" class="card-img-top" alt=""></a>
+                         
+                    
+
+                      <div class="card-body text-white">
+                        
+                          <h1>----Add Article----</h1>
+                      </div>
+                      {% endif %}
+                  </div>
+              </div>
             </div>
         </div>
     </div>
 </div>
 </div>
+
 
 {% endblock %}

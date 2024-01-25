@@ -1,0 +1,18 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ article.headline }}</title>
+</head>
+<body>
+    {% if article.photo %}
+    <img src="{{ article.photo.url }}" alt="{{ article.headline }}" width="200" height="200">
+{% endif %}
+    <h1>{{ article.headline }}</h1>
+    <p>{{ article.body }}</p>
+    <p>Category: {{ article.category.name }}</p>
+    <p>Published Time: {{ article.publishing_time }}</p>
+</body>
+</html>

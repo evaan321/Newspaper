@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 <!-- Inside your profile.html template -->
 <style>
@@ -8,14 +8,11 @@
 background-image: linear-gradient(43deg, #4747bf 0%, #601d56 46%, #6f6149 100%) ;
     }
 
-    .container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-    }
+  
 
     h1 {
         color: white;
+        
     }
 
     h2 {
@@ -43,42 +40,53 @@ background-image: linear-gradient(43deg, #4747bf 0%, #601d56 46%, #6f6149 100%) 
         padding: 0;
     }
 
-    li {
-        margin-bottom: 10px;
+    .p-img{
+        width: 300px;
+        height: 300px;
+
     }
 
-    a {
-        text-decoration: none;
-        color: white;
-    }
+   
 
-    a:hover {
-        text-decoration: underline;
-    }
+ 
 </style>
 
-<div class="container">
-    <h1>{{ user_model.username }}'s Profile</h1>
+<div class="">
+    {% if request.user.is_staff %}
+    <div class="row">
+        <div class="col-6 g-5 ">
+            <img class='p-img' src="{% static 'vector-design-avatar-dummy-sign-600nw-1290556063.webp' %}" alt="">
+            <h1>Username: {{ user_model.username }}</h1>
+            <h1>Email: {{user_model.email}}</h1>
+            <h1>First Name: {{user_model.first_name}}</h1>
+            <h1>Last Name: {{user_model.last_name}}</h1>
+            <a class="btn btn-success" href="{% url 'update_profile' %}">Update Profile </a>
+            <a class="btn btn-danger" href="{% url 'reset_password' %}">Change Password </a>
+        </div>
+        
+        <div class="col-6 g-5">
+            <a href="{% url 'addArticle' %}"><img src="{% static 'yo.gif' %}" alt=""></a>
+            
+            <h1 class="" >------Add Article------</h1>
+        </div>
+        {% else %}
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-6 g-5 ">
+                <img class='p-img' src="{% static 'vector-design-avatar-dummy-sign-600nw-1290556063.webp' %}" alt="">
+                <h1>Username: {{ user_model.username }}</h1>
+                <h1>Email: {{user_model.email}}</h1>
+                <h1>First Name: {{user_model.first_name}}</h1>
+                <h1>Last Name: {{user_model.last_name}}</h1>
 
-    {% if is_staff %}
-        <!-- Display form for creating a new article -->
-        <h2>Create a New Article</h2>
-        <form method="post" action="" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Create Article</button>
-        </form>
-    {% endif %}
+                <a class="btn btn-success" href="{% url 'update_profile' %}">Update Profile </a>
+            </div>
+        {% endif %}
+    </div>
+    
 
-    {% if user_articles %}
-        <!-- Display the list of articles created by the user -->
-        <h2>Your Articles</h2>
-        <ul>
-            {% for article in user_articles %}
-                <li>{{ article.title }} - <a href="{% url 'edit_article' article.id %}">Edit</a> | <a href="{% url 'delete_article' article.id %}">Delete</a></li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+
+
+    
 </div>
 
 {% endblock %}

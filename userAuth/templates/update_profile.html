@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<style>
+    .sp{
+        height: 80vh;
+    }
+    form {
+    width: 300px;
+    
+    
+    
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    padding: 8px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.error {
+    color: red;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+</style>
+<div class="sp d-flex justify-content-center align-items-center text-light">
+    <form method="post" >
+        {% csrf_token %}
+    
+        <label for="id_first_name">First Name:</label>
+        {{ form.first_name }}
+        {% if form.first_name.errors %}
+            <div class="error">{{ form.first_name.errors.0 }}</div>
+        {% endif %}
+    
+        <label for="id_last_name">Last Name:</label>
+        {{ form.last_name }}
+        {% if form.last_name.errors %}
+            <div class="error">{{ form.last_name.errors.0 }}</div>
+        {% endif %}
+    
+        <label for="id_username">Username:</label>
+        {{ form.username }}
+        {% if form.username.errors %}
+            <div class="error">{{ form.username.errors.0 }}</div>
+        {% endif %}
+    
+        <label for="id_email">Email:</label>
+        {{ form.email }}
+        {% if form.email.errors %}
+            <div class="error">{{ form.email.errors.0 }}</div>
+        {% endif %}
+    
+        <!-- Add other form fields as needed -->
+    
+        <button type="submit">Update Profile</button>
+    </form>
+</div>
+
+
+ 
+{% endblock %}

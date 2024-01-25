@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Inside your profile.html template -->
+{% load crispy_forms_tags %}
+<style>
+    body {
+        background-color: #4747bf ;
+background-image: linear-gradient(43deg, #4747bf 0%, #601d56 46%, #6f6149 100%) ;
+    }
+
+  
+
+    h1 {
+        color: white;
+    }
+
+    h2 {
+        color: white;
+        margin-top: 20px;
+
+    }
+
+    form {
+        margin-bottom: 20px;
+        color: white;
+    }
+
+    button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+  
+
+   
+
+  
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="">
+    <div class="">
+        <div class="d-flex justify-content-center align-items-center">
+
+         
+    {% if is_staff %}
+        
+   
+    <form method="post" action="" enctype="multipart/form-data">
+        <h2>Create a New Article</h2>
+        {% csrf_token %}
+        {{ form | crispy}}
+        <button class="btn btn-success" type="submit">Create Article</button>
+    </form>
+{% endif %}
+
+    </div>
+    
+
+
+  
+
+{% endblock %}

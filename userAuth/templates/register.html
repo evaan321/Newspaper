@@ -61,6 +61,7 @@
     background-color: #ff7f00; /* Slightly darker orange color on hover */
   }
 </style>
+{% load crispy_forms_tags %}
 
 <div class="mybody">
   <div class="register-container">
@@ -95,6 +96,7 @@
           <div class="invalid-feedback">{{ form.password2.errors.0 }}</div>
         {% endif %}
       </div>
+      <!-- {{form | crispy }} -->
       <button type="submit" class="text-dark">Register</button>
     </form>
   </div>

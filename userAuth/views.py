@@ -6,7 +6,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView,UpdateView
 from .models import *
 from .forms import *
 from django.contrib.auth import login
@@ -16,6 +16,11 @@ from django.core.mail import send_mail,EmailMessage
 from django.contrib import messages
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.models import User
+from django.contrib.auth import views
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
@@ -95,3 +100,33 @@ def activate(request, user_id, token):
     else:
         messages.error(request, 'Invalid activation link.')
         return redirect('login')
+    
+@login_required
+def update_profile(request):
+    if request.method == 'POST':
+        form = UpdateProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')  
+    else:
+        form = UpdateProfileForm(instance=request.user)
+
+    return render(request, 'update_profile.html', {'form': form})
+
+class UserProfileUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = User  
+    form_class = UserProfileForm  
+    template_name = 'update_profile.html'
+    success_url = reverse_lazy('profile') 
+    success_message = 'Your profile has been updated successfully.'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def form_valid(self, form):
+        messages.success(self.request, self.success_message)
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'There was an error updating your profile.')
+        return super().form_invalid(form)

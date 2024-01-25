@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import *
 from django.contrib.auth.models import User
 from article.models import *
+from django.contrib.auth.forms import UserChangeForm
+from crispy_forms.helper import FormHelper
 
 
 class RegisterForm(UserCreationForm):
@@ -10,8 +12,26 @@ class RegisterForm(UserCreationForm):
         model = User
         fields = UserCreationForm.Meta.fields + ('email',)
 
-
 class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
         fields = ['photo', 'headline', 'body', 'category']
+
+
+class UpdateProfileForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email'] 
+
+class UserProfileForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'first_name', 'last_name')
+        
+    def __init__(self, *args, **kwargs):
+        
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_show_labels = False
+        self.helper.label_class = ''
+        

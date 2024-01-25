@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .f-body{
+        height: 50vh;
+    }
+</style>
+  <div class="d-flex justify-content-center align-items-center text-light">
+    <div  class=" mt-5 f-body ">
+        <h2 class="mb-4">Delete Article</h2>
+        <p>Are you sure you want to delete this article?</p>
+        <form method="post" action="">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Delete</button>
+          <a href="{% url 'article_list' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+      </div>
+  </div>
+  
+{% endblock %}

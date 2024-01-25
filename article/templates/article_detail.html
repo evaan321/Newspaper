@@ -58,8 +58,11 @@
     height: auto;
   }
 </style>
+{% load crispy_forms_tags %}
 
 <div class="full-body">
+    
+   
   <div class="container">
     <div class="card">
       {% if article.photo %}
@@ -70,7 +73,15 @@
         <h1 class="card-title">{{ article.headline }}</h1>
         <p class="card-text">{{ article.body }}</p>
         <p class="card-text">Average Rating: {{ average_rating }}</p>
+        
         <p class="card-text"><small class="">Category: {{ article.category.name }}</small></p>
+        <a class="btn btn-success" href="{% url 'generate_pdf' article_id=article.id %}">Download PDF</a>
+       {% if request.user.is_staff %}
+       <br>
+        <a class="btn  btn-info text-light mt-3" href="{% url 'edit_article' article.id %}">Update</a>
+        <a class="btn btn-danger mt-3" href="{% url 'delete_article' article.id %}">Delete</a>
+        {% endif %}
+        </p>
       </div>
     </div>
 
@@ -79,8 +90,8 @@
         <form method="post" action="{% url 'article_detail' article_id=article.id %}">
           {% csrf_token %}
           <div class="form-group">
-            <h1 for="id_value" class="text-light">Rate this article:</h1>
-            {{ rating_form }}
+            <h1 for="id_value" class="text-light">Rate this article</h1>
+            {{ rating_form |crispy }}
           </div>
           <button type="submit" class="btn btn-warning ">Submit Rating</button>
         </form>
