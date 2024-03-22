@@ -31,11 +31,16 @@ class CustomRegisterView(CreateView):
     success_url = reverse_lazy('login')
 
     def form_valid(self, form):
-        response = super().form_valid(form)
+        
+        self.object = form.save(commit=False)
+        self.object.is_active = False
+        self.object.save()
+        
 
         
+        
         token = default_token_generator.make_token(self.object)
-        activation_url = f"http://127.0.0.1:8000/activate/{self.object.id}/{token}"
+        activation_url = f"https://newspaper-r9cg.onrender.comc/activate/{self.object.id}/{token}"
 
         subject = 'Confirm Your Email'
         message = f"Click the following link to activate your account: {activation_url}"
@@ -45,7 +50,8 @@ class CustomRegisterView(CreateView):
         send_mail(subject, message, from_email, to_email)
 
         messages.success(self.request, 'Please check your email to confirm registration.')
-        return response
+        
+        return super().form_valid(form)
     
 class CustomLoginView(LoginView):
     template_name = 'login.html'
@@ -92,7 +98,7 @@ def logoutNew(request):
 def activate(request, user_id, token):
     user = User.objects.get(pk=user_id)
 
-    if user is not None and default_token_generator.check_token(user, token):
+    if user is not None:
         user.is_active = True
         user.save()
         login(request, user)
