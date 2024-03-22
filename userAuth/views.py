@@ -40,7 +40,7 @@ class CustomRegisterView(CreateView):
         
         
         token = default_token_generator.make_token(self.object)
-        activation_url = f"https://newspaper-r9cg.onrender.comc/activate/{self.object.id}/{token}"
+        activation_url = f"https://newspaper-r9cg.onrender.com/activate/{self.object.id}/{token}"
 
         subject = 'Confirm Your Email'
         message = f"Click the following link to activate your account: {activation_url}"
